@@ -10,7 +10,7 @@ import random, math, operator
 # utilities
 
 def random_n(low, high, n):
-    return list(( random.randrange(low,high) for _ in xrange(n) ))
+    return list(( random.randrange(low,high) for _ in range(n) ))
 
 def neighbours(point, others, count):
     
@@ -24,10 +24,10 @@ def neighbours(point, others, count):
         
     dists = ( (other,dist(point,other)) for other in others if other != point)
     sortdist = (_ for _ in sorted(dists, key=operator.itemgetter(1) ))
-    return list(( next(sortdist)[0] for _ in xrange(count) ))
+    return list(( next(sortdist)[0] for _ in range(count) ))
 
 def midpoint(coords):
-    xs,ys,zs = zip(*coords)
+    xs,ys,zs = list(zip(*coords))
     xmid = sum(xs) / len(xs)
     ymid = sum(ys) / len(ys)
     zmid = sum(zs) / len(zs)

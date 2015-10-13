@@ -195,7 +195,7 @@ class Trapezoid(object):
                            for ((x0, y0), (x1, y1)) in self.segments(p)))
 
     def segments(self, p):
-        return zip(p, p[1:] + [p[0]])
+        return list(zip(p, p[1:] + [p[0]]))
 
 
 def line_intersect(edge, x):
@@ -258,11 +258,11 @@ class Triangulator(object):
             self.trapezoidal_map.clear()
                     
         # Mark outside trapezoids w/ depth-first search
-        for k, t in self.trapezoidal_map.map.items():
+        for k, t in list(self.trapezoidal_map.map.items()):
             self.mark_outside(t)
             
         # Collect interior trapezoids
-        for k, t in self.trapezoidal_map.map.items():
+        for k, t in list(self.trapezoidal_map.map.items()):
             if t.inside:
                 self.trapezoids.append(t)
                 t.add_points()
@@ -334,7 +334,7 @@ def merge_sort(l):
                 p2+=1
         if p1<len(lleft):l[p:]=lleft[p1:]
         elif p2<len(lright):l[p:]=lright[p2:]
-        else : print "internal error"
+        else : print("internal error")
     return l
 
 class TrapezoidalMap(object):
@@ -573,7 +573,7 @@ class MonotoneMountain:
             self.size += 1
 
     def remove(self, point):
-        next = point.next
+        next = point.__next__
         prev = point.prev
         point.prev.next = next
         point.next.prev = prev
@@ -582,14 +582,14 @@ class MonotoneMountain:
     def process(self):
         self.positive = self.angle_sign()
         self.gen_mono_poly()
-        p = self.head.next
+        p = self.head.__next__
         while p.neq(self.tail):
             a = self.angle(p)
             if a >= PI_SLOP or a <= -PI_SLOP or a == 0: 
                 self.remove(p)
             elif self.is_convex(p): 
                 self.convex_points.add(p)
-            p = p.next
+            p = p.__next__
         self.triangulate()
 
     def triangulate(self):
@@ -597,7 +597,7 @@ class MonotoneMountain:
             ear = self.convex_points.pop()
             a = ear.prev
             b = ear
-            c = ear.next
+            c = ear.__next__
             triangle = (a, b, c)
             self.triangles.append(triangle)
             self.remove(ear)
@@ -614,15 +614,15 @@ class MonotoneMountain:
         p = self.head
         while(p != None):
             self.mono_poly.append(p)
-            p = p.next
+            p = p.__next__
 
     def angle(self, p):
-        a = p.next - p
+        a = p.__next__ - p
         b = p.prev - p
         return atan2(a.cross(b), a.dot(b))
 
     def angle_sign(self):
-        a = self.head.next - self.head
+        a = self.head.__next__ - self.head
         b = self.tail - self.head
         return atan2(a.cross(b), a.dot(b)) >= 0
 
