@@ -9,12 +9,12 @@ Steven Fortune C++ version of a Delauney triangulator.
 
 ## Platforms
 
-Tested on Python version 2.x. 
+Tested on Python version 2.x.
 
 
 ## Dependencies
 
-Pure Python, no dependencies. 
+Pure Python, no dependencies.
 
 
 ## Installing it
@@ -37,7 +37,7 @@ And for voronoi diagrams:
     import pytess
     points = [(1,1), (5,5), (3,5), (8,1)]
     voronoipolys = pytess.voronoi(points)
-    
+
 
 ## More Information:
 
@@ -66,5 +66,3 @@ __version__ = "0.1.0"
 
 
 from .main import *
-
-
